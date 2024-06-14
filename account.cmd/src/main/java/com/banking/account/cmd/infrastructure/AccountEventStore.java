@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import com.banking.cqrs.core.producers.EventProducer;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,9 @@ public class AccountEventStore implements EventStore {
 	
 	@Autowired
 	private EventStoreRepository eventStoreRepository;
+
+	@Autowired
+	private EventProducer eventProducer;
 
 	@Override
 	public void saveEvents(String aggregateId, Iterable<BaseEvent> events, Integer expectedVersion) {
@@ -47,9 +51,11 @@ public class AccountEventStore implements EventStore {
 					.build();
 			
 			var persistedEvent = eventStoreRepository.save(eventModel);
-			if (!Objects.isNull(persistedEvent)) {
+			if (!Objects.isNull(persistedEvent) && !persistedEvent.getId().isEmpty()) {
 				log.info("Saved: {}", persistedEvent.toString());
-				// TODO - Producir evento para Kafka
+
+				// Producir evento para Kafka
+				eventProducer.produce(event.getClass().getSimpleName(), event);
 			}
 		}
 	}
