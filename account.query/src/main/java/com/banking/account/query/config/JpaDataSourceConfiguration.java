@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
+import com.banking.account.query.domain.BankAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
@@ -23,7 +24,7 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(
-		basePackages = {"com.banking.account.query.repository"},
+		basePackages = {"com.banking.account.query.domain"},
 		entityManagerFactoryRef = "jpaEntityManagerFactory",
 		transactionManagerRef = "jpaTransactionManager")
 public class JpaDataSourceConfiguration {
@@ -49,6 +50,7 @@ public class JpaDataSourceConfiguration {
 		
 		return builder.dataSource(dataSource)
 				.properties(properties)
+				.packages(BankAccount.class)
 				.persistenceUnit("jpa-unit")
 				.build();
 	}
