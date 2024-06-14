@@ -12,7 +12,7 @@ public interface AccountRepository extends JpaRepository<BankAccount, String> {
 
     Optional<BankAccount> findByAccountHolder(String accountHolder);
 
-    List<BaseEntity> findBalanceGreaterThan(Double balance);
+    List<BaseEntity> findByBalanceGreaterThan(Double balance);
 
-    List<BaseEntity> findBalanceLessThan(Double balance);
+    List<BaseEntity> findByBalanceLessThan(Double balance);
 }
