@@ -6,11 +6,13 @@ import com.banking.account.common.events.FundsDepositedEvent;
 import com.banking.account.common.events.FundsWithdrawnEvent;
 import com.banking.account.query.domain.AccountRepository;
 import com.banking.account.query.domain.BankAccount;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Slf4j
 public class AccountEventHandler implements EventHandler {
 
     @Autowired
@@ -27,7 +29,8 @@ public class AccountEventHandler implements EventHandler {
                 .balance(event.getOpeningBalance())
                 .build();
 
-        accountRepository.save(bankAccount);
+        var saved = accountRepository.save(bankAccount);
+        log.info("Saved: {}", saved.toString());
     }
 
     @Override
@@ -43,7 +46,8 @@ public class AccountEventHandler implements EventHandler {
         var latestBalance = currentBalance + event.getAmount();
         bankAccount.get().setBalance(latestBalance);
 
-        accountRepository.save(bankAccount.get());
+        var updated = accountRepository.save(bankAccount.get());
+        log.info("Updated: {}", updated.toString());
     }
 
     @Override
@@ -59,12 +63,14 @@ public class AccountEventHandler implements EventHandler {
         var latestBalance = currentBalance - event.getAmount();
         bankAccount.get().setBalance(latestBalance);
 
-        accountRepository.save(bankAccount.get());
+        var updated = accountRepository.save(bankAccount.get());
+        log.info("Updated: {}", updated.toString());
     }
 
     @Override
     @Transactional
     public void on(AccountClosedEvent event) {
         accountRepository.deleteById(event.getId());
+        log.info("Deleted: {}", event.getId());
     }
 }
