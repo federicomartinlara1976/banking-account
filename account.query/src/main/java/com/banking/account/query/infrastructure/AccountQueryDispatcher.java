@@ -13,7 +13,10 @@ import com.banking.cqrs.core.infrastructure.QueryDispatcher;
 import com.banking.cqrs.core.queries.BaseQuery;
 import com.banking.cqrs.core.queries.QueryHandlerMethod;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class AccountQueryDispatcher implements QueryDispatcher {
 
 	@SuppressWarnings("rawtypes")
@@ -22,6 +25,7 @@ public class AccountQueryDispatcher implements QueryDispatcher {
 	@Override
 	public <T extends BaseQuery> void registerHandler(Class<T> type, QueryHandlerMethod<T> handler) {
 		var handlers = routes.computeIfAbsent(type, c -> new LinkedList<>());
+		log.info("Registrando {}", handler.toString());
 		handlers.add(handler);
 	}
 
