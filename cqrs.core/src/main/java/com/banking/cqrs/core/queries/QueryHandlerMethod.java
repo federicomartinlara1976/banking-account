@@ -7,5 +7,5 @@ import com.banking.cqrs.core.domain.BaseEntity;
 @FunctionalInterface
 public interface QueryHandlerMethod<T extends BaseQuery> {
 
-	List<BaseEntity> handle(BaseQuery query);
+	List<BaseEntity> handle(T query);
 }
