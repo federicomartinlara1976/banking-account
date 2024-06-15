@@ -18,8 +18,9 @@
     	<module>parent-pom</module>
     	<module>cqrs.core</module>
     	<module>account.common</module>
-    	<module>account.cmd</module>
-    	<module>account.query</module>
+    	<module>microservices/microservices-parent-pom</module>
+    	<module>microservices/account.cmd</module>
+    	<module>microservices/account.query</module>
     </modules>
 
  </project>
