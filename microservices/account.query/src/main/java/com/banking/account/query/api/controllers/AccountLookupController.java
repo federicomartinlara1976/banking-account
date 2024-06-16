@@ -38,7 +38,7 @@ public class AccountLookupController {
         
         var response = AccountLookupResponse.builder()
         		.accounts(accounts)
-        		.message(MessageFormat.format("%d results", accounts.size()))
+        		.message(MessageFormat.format("{0} results", accounts.size()))
         		.build();
         
         return new ResponseEntity<AccountLookupResponse>(response, HttpStatus.OK);
