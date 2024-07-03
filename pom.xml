@@ -13,14 +13,42 @@
     <artifactId>banking-account</artifactId>
     <version>1.0.0</version>
     <packaging>pom</packaging>
+    
+    <properties>
+		<java.version>11</java.version>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<maven.plugin.version>3.8.2</maven.plugin.version>
+	</properties>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.2.2</version>
+		</dependency>
+
+	</dependencies>
 
     <modules>
     	<module>parent-pom</module>
     	<module>cqrs.core</module>
     	<module>account.common</module>
-    	<module>microservices/microservices-parent-pom</module>
-    	<module>microservices/account.cmd</module>
-    	<module>microservices/account.query</module>
+    	<module>microservices</module>
     </modules>
 
  </project>

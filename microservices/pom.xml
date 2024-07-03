@@ -6,12 +6,12 @@
 
 	<parent>
 		<groupId>com.banking</groupId>
-		<artifactId>parent-pom</artifactId>
+		<artifactId>banking-account</artifactId>
 		<version>1.0.0</version>
-		<relativePath>../parent-pom/pom.xml</relativePath>
+		<relativePath>../pom.xml</relativePath>
 	</parent>
 
-	<artifactId>microservices-parent-pom</artifactId>
+	<artifactId>microservices</artifactId>
 	<packaging>pom</packaging>
 
 	<properties>
@@ -56,13 +56,19 @@
 		<dependency>
 			<groupId>com.banking</groupId>
 			<artifactId>cqrs.core</artifactId>
-			<version>1.0.0</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.banking</groupId>
 			<artifactId>account.common</artifactId>
-			<version>1.0.0</version>
+		</dependency>
+		
+		<!-- Graylog appender -->
+		<dependency>
+			<groupId>de.siegmar</groupId>
+			<artifactId>logback-gelf</artifactId>
+			<version>4.0.2</version>
+			<scope>compile</scope>
 		</dependency>
 
 	</dependencies>
@@ -78,5 +84,10 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
+	
+	<modules>
+		<module>account.cmd</module>
+		<module>account.query</module>
+	</modules>
 
 </project>

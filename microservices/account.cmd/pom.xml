@@ -6,13 +6,12 @@
 
 	<parent>
 		<groupId>com.banking</groupId>
-		<artifactId>microservices-parent-pom</artifactId>
+		<artifactId>microservices</artifactId>
 		<version>1.0.0</version>
-		<relativePath>../microservices-parent-pom/pom.xml</relativePath>
+		<relativePath>../pom.xml</relativePath>
 	</parent>
 
 	<artifactId>account.cmd</artifactId>
-	<version>1.0.0</version>
 	<name>account.cmd</name>
 	<description>Bank Transactions API</description>
 
