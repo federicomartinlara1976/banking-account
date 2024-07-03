@@ -45,7 +45,6 @@
 	</dependencies>
 
     <modules>
-    	<module>parent-pom</module>
     	<module>cqrs.core</module>
     	<module>account.common</module>
     	<module>microservices</module>
