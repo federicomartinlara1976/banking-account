@@ -98,6 +98,7 @@
     		<plugin>
     			<groupId>org.apache.maven.plugins</groupId>
     			<artifactId>maven-surefire-plugin</artifactId>
+    			<version>3.3.0</version>
     			<configuration>
     				<useSystemClassLoader>false</useSystemClassLoader>
     			</configuration>
@@ -106,6 +107,7 @@
     		<plugin>
     			<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>${spring-boot.version}</version>
 				<executions>
 					<execution>
 						<goals>
@@ -127,6 +129,7 @@
     		<plugin>
     			<groupId>org.apache.maven.plugins</groupId>
     			<artifactId>maven-javadoc-plugin</artifactId>
+    			<version>3.7.0</version>
     			<configuration>
     			</configuration>
     		</plugin>
