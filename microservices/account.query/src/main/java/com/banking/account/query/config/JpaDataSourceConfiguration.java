@@ -4,7 +4,7 @@ import java.beans.PropertyVetoException;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 import com.banking.account.query.domain.BankAccount;

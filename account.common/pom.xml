@@ -5,13 +5,12 @@
 	
 	<parent>
 		<groupId>com.banking</groupId>
-		<artifactId>parent-pom</artifactId>
+		<artifactId>banking-account-parent</artifactId>
 		<version>1.0.0</version>
-		<relativePath>../parent-pom/pom.xml</relativePath>
+		<relativePath>../pom.xml</relativePath>
 	</parent>
 	
 	<artifactId>account.common</artifactId>
-	<version>1.0.0</version>
 	<name>account.common</name>
 	<description>Banking account common project</description>
 	
