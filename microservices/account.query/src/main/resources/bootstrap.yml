@@ -1,9 +1,7 @@
 spring:
   application:
     name: account.query
-    
-  profiles:
-    active: ${ENV}
+    version: 1.0.0
   
   config.import: "optional:configserver:"
   cloud:

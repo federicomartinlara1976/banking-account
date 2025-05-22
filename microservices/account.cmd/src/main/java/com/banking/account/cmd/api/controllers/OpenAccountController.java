@@ -16,7 +16,7 @@ import com.banking.account.common.dto.BaseResponse;
 import com.banking.cqrs.core.infrastructure.CommandDispatcher;
 
 @RestController
-@RequestMapping(path = "/api/v1/openBankAccount")
+@RequestMapping(path = "/account-cmd/api/openBankAccount")
 public class OpenAccountController {
 
     @Autowired
