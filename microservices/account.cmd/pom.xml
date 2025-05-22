@@ -30,6 +30,8 @@
 	</dependencies>
 
 	<build>
+		<finalName>account.cmd-${spring.profiles.active}</finalName>
+	
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -49,19 +51,16 @@
 	<profiles>
 		<profile>
 			<id>dev</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<build>
-				<finalName>account.cmd-dev</finalName>
-			</build>
+			<properties>
+				<spring.profiles.active>dev</spring.profiles.active>
+			</properties>
 		</profile>
 
 		<profile>
-			<id>pro</id>
-			<build>
-				<finalName>account.cmd</finalName>
-			</build>
+			<id>prod</id>
+			<properties>
+				<spring.profiles.active>prod</spring.profiles.active>
+			</properties>
 		</profile>
 	</profiles>
 
