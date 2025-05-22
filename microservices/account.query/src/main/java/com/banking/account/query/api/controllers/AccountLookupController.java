@@ -22,7 +22,7 @@ import com.banking.account.query.domain.BankAccount;
 import com.banking.cqrs.core.infrastructure.QueryDispatcher;
 
 @RestController
-@RequestMapping(path = "/api/v1/bankAccountLookup")
+@RequestMapping(path = "/account-query/api/bankAccountLookup")
 public class AccountLookupController {
 
     @Autowired

@@ -14,7 +14,7 @@ import com.banking.account.common.dto.BaseResponse;
 import com.banking.cqrs.core.infrastructure.CommandDispatcher;
 
 @RestController
-@RequestMapping(path = "/api/v1/depositFunds")
+@RequestMapping(path = "/account-cmd/api/depositFunds")
 public class DepositFundsController {
 
     @Autowired
