@@ -2,7 +2,6 @@ package com.banking.account.query;
 
 import javax.annotation.PostConstruct;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -18,11 +17,14 @@ import com.banking.cqrs.core.infrastructure.QueryDispatcher;
 @EnableDiscoveryClient
 public class BankingAccountQueryApplication {
 	
-	@Autowired
 	private QueryDispatcher queryDispatcher;
 	
-	@Autowired
 	private QueryHandler queryHandler;
+
+	public BankingAccountQueryApplication(QueryDispatcher queryDispatcher, QueryHandler queryHandler) {
+		this.queryDispatcher = queryDispatcher;
+		this.queryHandler = queryHandler;
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(BankingAccountQueryApplication.class, args);

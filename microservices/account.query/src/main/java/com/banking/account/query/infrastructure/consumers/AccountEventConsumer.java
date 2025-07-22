@@ -1,22 +1,26 @@
 package com.banking.account.query.infrastructure.consumers;
 
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.support.Acknowledgment;
+import org.springframework.stereotype.Service;
+
 import com.banking.account.common.events.AccountClosedEvent;
 import com.banking.account.common.events.AccountOpenedEvent;
 import com.banking.account.common.events.FundsDepositedEvent;
 import com.banking.account.common.events.FundsWithdrawnEvent;
 import com.banking.account.query.infrastructure.handlers.EventHandler;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.kafka.support.Acknowledgment;
-import org.springframework.stereotype.Service;
 
 @Service
 public class AccountEventConsumer implements EventConsumer {
 
-    @Autowired
     private EventHandler eventHandler;
 
-    @KafkaListener(topics = "AccountOpenedEvent", groupId = "${spring.kafka.consumer.group-id}")
+    public AccountEventConsumer(EventHandler eventHandler) {
+		super();
+		this.eventHandler = eventHandler;
+	}
+
+	@KafkaListener(topics = "AccountOpenedEvent", groupId = "${spring.kafka.consumer.group-id}")
     @Override
     public void comsume(AccountOpenedEvent event, Acknowledgment acknowledgment) {
         eventHandler.on(event);
