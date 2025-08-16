@@ -40,35 +40,27 @@ public class AccountEventHandler implements EventHandler {
     @Override
     @Transactional
     public void on(FundsDepositedEvent event) {
-        var bankAccount = accountRepository.findById(event.getId());
+        accountRepository.findById(event.getId()).ifPresent(bankAccount -> {
+        	var currentBalance = bankAccount.getBalance();
+            var latestBalance = currentBalance + event.getAmount();
+            bankAccount.setBalance(latestBalance);
 
-        if (!bankAccount.isPresent()) {
-            return;
-        }
-
-        var currentBalance = bankAccount.get().getBalance();
-        var latestBalance = currentBalance + event.getAmount();
-        bankAccount.get().setBalance(latestBalance);
-
-        var updated = accountRepository.save(bankAccount.get());
-        log.info("Updated: {}", updated.toString());
+            var updated = accountRepository.save(bankAccount);
+            log.info("Updated: {}", updated.toString());
+        });
     }
 
     @Override
     @Transactional
     public void on(FundsWithdrawnEvent event) {
-        var bankAccount = accountRepository.findById(event.getId());
+    	accountRepository.findById(event.getId()).ifPresent(bankAccount -> {
+        	var currentBalance = bankAccount.getBalance();
+            var latestBalance = currentBalance - event.getAmount();
+            bankAccount.setBalance(latestBalance);
 
-        if (!bankAccount.isPresent()) {
-            return;
-        }
-
-        var currentBalance = bankAccount.get().getBalance();
-        var latestBalance = currentBalance - event.getAmount();
-        bankAccount.get().setBalance(latestBalance);
-
-        var updated = accountRepository.save(bankAccount.get());
-        log.info("Updated: {}", updated.toString());
+            var updated = accountRepository.save(bankAccount);
+            log.info("Updated: {}", updated.toString());
+        });
     }
 
     @Override
