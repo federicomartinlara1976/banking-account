@@ -40,12 +40,12 @@ public class AccountEventHandler implements EventHandler {
     @Override
     @Transactional
     public void on(FundsDepositedEvent event) {
-        accountRepository.findById(event.getId()).ifPresent(bankAccount -> {
-        	var currentBalance = bankAccount.getBalance();
+        accountRepository.findById(event.getId()).ifPresent(account -> {
+        	var currentBalance = account.getBalance();
             var latestBalance = currentBalance + event.getAmount();
-            bankAccount.setBalance(latestBalance);
+            account.setBalance(latestBalance);
 
-            var updated = accountRepository.save(bankAccount);
+            var updated = accountRepository.save(account);
             log.info("Updated: {}", updated.toString());
         });
     }
@@ -53,12 +53,12 @@ public class AccountEventHandler implements EventHandler {
     @Override
     @Transactional
     public void on(FundsWithdrawnEvent event) {
-    	accountRepository.findById(event.getId()).ifPresent(bankAccount -> {
-        	var currentBalance = bankAccount.getBalance();
+    	accountRepository.findById(event.getId()).ifPresent(account -> {
+        	var currentBalance = account.getBalance();
             var latestBalance = currentBalance - event.getAmount();
-            bankAccount.setBalance(latestBalance);
+            account.setBalance(latestBalance);
 
-            var updated = accountRepository.save(bankAccount);
+            var updated = accountRepository.save(account);
             log.info("Updated: {}", updated.toString());
         });
     }
