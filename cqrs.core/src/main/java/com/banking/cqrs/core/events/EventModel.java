@@ -10,7 +10,7 @@ import lombok.Builder;
 import lombok.Data;
 
 @Data
-@Builder(toBuilder = true)
+@Builder
 @Document(collection = "eventStore")
 public class EventModel implements Serializable {
 
