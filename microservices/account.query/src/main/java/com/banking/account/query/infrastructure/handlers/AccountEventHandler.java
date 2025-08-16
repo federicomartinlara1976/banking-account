@@ -1,5 +1,7 @@
 package com.banking.account.query.infrastructure.handlers;
 
+import java.util.function.BinaryOperator;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +19,9 @@ import lombok.extern.slf4j.Slf4j;
 public class AccountEventHandler implements EventHandler {
 
     private AccountRepository accountRepository;
+    
+    BinaryOperator<Double> bSuma = (num1, num2) -> num1 + num2;
+    BinaryOperator<Double> bResta = (num1, num2) -> num1 - num2;
 
     public AccountEventHandler(AccountRepository accountRepository) {
 		this.accountRepository = accountRepository;
@@ -42,7 +47,7 @@ public class AccountEventHandler implements EventHandler {
     public void on(FundsDepositedEvent event) {
         accountRepository.findById(event.getId()).ifPresent(account -> {
         	var currentBalance = account.getBalance();
-            var latestBalance = currentBalance + event.getAmount();
+            var latestBalance = bSuma.apply(currentBalance, event.getAmount());
             account.setBalance(latestBalance);
 
             var updated = accountRepository.save(account);
@@ -55,7 +60,7 @@ public class AccountEventHandler implements EventHandler {
     public void on(FundsWithdrawnEvent event) {
     	accountRepository.findById(event.getId()).ifPresent(account -> {
         	var currentBalance = account.getBalance();
-            var latestBalance = currentBalance - event.getAmount();
+            var latestBalance = bResta.apply(currentBalance, event.getAmount());
             account.setBalance(latestBalance);
 
             var updated = accountRepository.save(account);
