@@ -40,7 +40,7 @@ public class AccountEventHandler implements EventHandler {
                 .build();
 
         var saved = accountRepository.save(bankAccount);
-        log.info("Saved: {}", saved.toString());
+        log.info("Saved: {}", saved);
     }
 
     @Override
