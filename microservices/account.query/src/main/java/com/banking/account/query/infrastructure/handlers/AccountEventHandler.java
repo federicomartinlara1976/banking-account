@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.banking.account.common.events.AccountClosedEvent;
 import com.banking.account.common.events.AccountOpenedEvent;
 import com.banking.account.common.events.FundsDepositedEvent;
+import com.banking.account.common.events.FundsEvent;
 import com.banking.account.common.events.FundsWithdrawnEvent;
 import com.banking.account.query.domain.AccountRepository;
 import com.banking.account.query.domain.BankAccount;
@@ -20,8 +21,8 @@ public class AccountEventHandler implements EventHandler {
 
     private AccountRepository accountRepository;
     
-    BinaryOperator<Double> bSuma = (num1, num2) -> num1 + num2;
-    BinaryOperator<Double> bResta = (num1, num2) -> num1 - num2;
+    BinaryOperator<Double> bSuma = (current, amount) -> current + amount;
+    BinaryOperator<Double> bResta = (current, amount) -> current - amount;
 
     public AccountEventHandler(AccountRepository accountRepository) {
 		this.accountRepository = accountRepository;
@@ -45,22 +46,19 @@ public class AccountEventHandler implements EventHandler {
     @Override
     @Transactional
     public void on(FundsDepositedEvent event) {
-        accountRepository.findById(event.getId()).ifPresent(account -> {
-        	var currentBalance = account.getBalance();
-            var latestBalance = bSuma.apply(currentBalance, event.getAmount());
-            account.setBalance(latestBalance);
-
-            var updated = accountRepository.save(account);
-            log.info("Updated: {}", updated.toString());
-        });
+    	updateFunds(event, bSuma);
     }
 
     @Override
     @Transactional
     public void on(FundsWithdrawnEvent event) {
+    	updateFunds(event, bResta);
+    }
+    
+    private void updateFunds(FundsEvent event, BinaryOperator<Double> operation) {
     	accountRepository.findById(event.getId()).ifPresent(account -> {
         	var currentBalance = account.getBalance();
-            var latestBalance = bResta.apply(currentBalance, event.getAmount());
+            var latestBalance = operation.apply(currentBalance, event.getAmount());
             account.setBalance(latestBalance);
 
             var updated = accountRepository.save(account);
