@@ -8,10 +8,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.banking.account.common.events.AccountClosedEvent;
 import com.banking.account.common.events.AccountOpenedEvent;
 import com.banking.account.common.events.FundsDepositedEvent;
-import com.banking.account.common.events.FundsEvent;
 import com.banking.account.common.events.FundsWithdrawnEvent;
 import com.banking.account.query.domain.AccountRepository;
 import com.banking.account.query.domain.BankAccount;
+import com.banking.cqrs.core.events.BaseEvent;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -46,26 +46,26 @@ public class AccountEventHandler implements EventHandler {
     @Override
     @Transactional
     public void on(FundsDepositedEvent event) {
-    	updateFunds(event, bSuma);
+    	update(event, event.getAmount(), bSuma);
     }
 
     @Override
     @Transactional
     public void on(FundsWithdrawnEvent event) {
-    	updateFunds(event, bResta);
+    	update(event, event.getAmount(), bResta);
     }
     
-    private void updateFunds(FundsEvent event, BinaryOperator<Double> operation) {
+    private void update(BaseEvent event, Double amount, BinaryOperator<Double> operation) {
     	accountRepository.findById(event.getId()).ifPresent(account -> {
         	var currentBalance = account.getBalance();
-            var latestBalance = operation.apply(currentBalance, event.getAmount());
+            var latestBalance = operation.apply(currentBalance, amount);
             account.setBalance(latestBalance);
 
             var updated = accountRepository.save(account);
             log.info("Updated: {}", updated.toString());
         });
     }
-
+    
     @Override
     @Transactional
     public void on(AccountClosedEvent event) {
