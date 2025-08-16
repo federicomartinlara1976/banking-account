@@ -43,12 +43,10 @@
 
     <logger name="com.banking.account.cmd" level="${LOG_LEVEL}" additivity="false">
     	<appender-ref ref="CONSOLE"/>
-        <appender-ref ref="GELF"/>
     </logger>
 
     <root level="${LOG_LEVEL}">
     	<appender-ref ref="CONSOLE"/>
-        <appender-ref ref="GELF"/>
     </root>
 
 </configuration>
