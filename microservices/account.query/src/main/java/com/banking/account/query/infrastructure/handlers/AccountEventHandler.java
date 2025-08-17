@@ -45,17 +45,16 @@ public class AccountEventHandler implements EventHandler {
     }
 
     @Override
-    @Transactional
     public void on(FundsDepositedEvent event) {
     	update(event, event.getAmount(), bSuma);
     }
 
     @Override
-    @Transactional
     public void on(FundsWithdrawnEvent event) {
     	update(event, event.getAmount(), bResta);
     }
     
+    @Transactional
     private void update(BaseEvent event, Double amount, DoubleBinaryOperator operation) {
     	accountRepository.findById(event.getId()).ifPresent(account -> {
         	var currentBalance = account.getBalance();
