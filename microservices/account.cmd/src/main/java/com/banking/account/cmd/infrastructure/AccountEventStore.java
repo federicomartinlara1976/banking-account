@@ -62,17 +62,12 @@ public class AccountEventStore implements EventStore {
 
 	@Override
 	public List<BaseEvent> getEvents(String aggregateId) {
-		try {
-			var eventStream = eventStoreRepository.findByAggregateIdentifier(aggregateId);
-			if (CollectionUtils.isEmpty(eventStream)) {
-				throw new AggregateNotFoundException("La cuenta del banco es incorrecta");
-			}
-			
-			return eventStream.stream().map(x -> x.getEventData()).collect(Collectors.toList());
-		} catch (Exception e) {
-			log.error("ERROR:", e);
-			throw e;
+		var eventStream = eventStoreRepository.findByAggregateIdentifier(aggregateId);
+		if (CollectionUtils.isEmpty(eventStream)) {
+			throw new AggregateNotFoundException("La cuenta del banco es incorrecta");
 		}
+			
+		return eventStream.stream().map(x -> x.getEventData()).collect(Collectors.toList());
 	}
 
 }
