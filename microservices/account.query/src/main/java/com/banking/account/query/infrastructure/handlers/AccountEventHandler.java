@@ -1,6 +1,7 @@
 package com.banking.account.query.infrastructure.handlers;
 
 import java.util.function.BinaryOperator;
+import java.util.function.DoubleBinaryOperator;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,8 +22,8 @@ public class AccountEventHandler implements EventHandler {
 
     private AccountRepository accountRepository;
     
-    BinaryOperator<Double> bSuma = (current, amount) -> current + amount;
-    BinaryOperator<Double> bResta = (current, amount) -> current - amount;
+    DoubleBinaryOperator bSuma = (current, amount) -> current + amount;
+    DoubleBinaryOperator bResta = (current, amount) -> current - amount;
 
     public AccountEventHandler(AccountRepository accountRepository) {
 		this.accountRepository = accountRepository;
@@ -55,10 +56,10 @@ public class AccountEventHandler implements EventHandler {
     	update(event, event.getAmount(), bResta);
     }
     
-    private void update(BaseEvent event, Double amount, BinaryOperator<Double> operation) {
+    private void update(BaseEvent event, Double amount, DoubleBinaryOperator operation) {
     	accountRepository.findById(event.getId()).ifPresent(account -> {
         	var currentBalance = account.getBalance();
-            var latestBalance = operation.apply(currentBalance, amount);
+            var latestBalance = operation.applyAsDouble(currentBalance, amount);
             account.setBalance(latestBalance);
 
             var updated = accountRepository.save(account);
