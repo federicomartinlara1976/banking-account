@@ -31,7 +31,7 @@ public class AccountEventHandler implements EventHandler {
 	@Override
     @Transactional
     public void on(AccountOpenedEvent event) {
-        var bankAccount = BankAccount.builder()
+		BankAccount bankAccount = BankAccount.builder()
                 .id(event.getId())
                 .accountHolder(event.getAccountHolder())
                 .creationDate(event.getCreatedDate())
@@ -39,8 +39,8 @@ public class AccountEventHandler implements EventHandler {
                 .balance(event.getOpeningBalance())
                 .build();
 
-        var saved = accountRepository.save(bankAccount);
-        log.info("Saved: {}", saved);
+		bankAccount = accountRepository.save(bankAccount);
+        log.info("Saved: {}", bankAccount);
     }
 
     @Override
