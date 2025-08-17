@@ -1,6 +1,5 @@
 package com.banking.account.query.infrastructure.handlers;
 
-import java.util.function.BinaryOperator;
 import java.util.function.DoubleBinaryOperator;
 
 import org.springframework.stereotype.Service;
