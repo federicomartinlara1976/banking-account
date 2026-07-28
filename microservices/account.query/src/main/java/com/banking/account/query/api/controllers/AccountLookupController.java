@@ -48,7 +48,7 @@ public class AccountLookupController {
     }
     
     @GetMapping("/byId/{id}")
-    public ResponseEntity<AccountLookupResponse> getById(@PathVariable(value="id") String id) {
+    public ResponseEntity<AccountLookupResponse> getById(@PathVariable String id) {
         List<BankAccount> accounts = queryDispatcher.send(new FindAccountByIdQuery(id));
         
         if (CollectionUtils.isEmpty(accounts)) {
@@ -64,7 +64,7 @@ public class AccountLookupController {
     }
     
     @GetMapping("/byHolder/{accountHolder}")
-    public ResponseEntity<AccountLookupResponse> getByAccountHolder(@PathVariable(value="accountHolder") String accountHolder) {
+    public ResponseEntity<AccountLookupResponse> getByAccountHolder(@PathVariable String accountHolder) {
         List<BankAccount> accounts = queryDispatcher.send(new FindAccountByHolderQuery(accountHolder));
         
         if (CollectionUtils.isEmpty(accounts)) {
@@ -80,7 +80,7 @@ public class AccountLookupController {
     }
     
     @GetMapping("/withBalance/{equalityType}/{balance}")
-    public ResponseEntity<AccountLookupResponse> getByWithBalance(@PathVariable(value="equalityType") EqualityType equalityType, @PathVariable(value="balance") Double balance) {
+    public ResponseEntity<AccountLookupResponse> getByWithBalance(@PathVariable EqualityType equalityType, @PathVariable Double balance) {
         List<BankAccount> accounts = queryDispatcher.send(new FindAccountWithBalanceQuery(balance, equalityType));
         
         if (CollectionUtils.isEmpty(accounts)) {
