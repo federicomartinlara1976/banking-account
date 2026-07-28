@@ -41,7 +41,7 @@ public class AccountLookupController {
         
         var response = AccountLookupResponse.builder()
         		.accounts(accounts)
-        		.message(MessageFormat.format("{0} results", accounts.size()))
+        		.message(String.format(RESULTS_FORMAT, accounts.size()))
         		.build();
         
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -57,7 +57,7 @@ public class AccountLookupController {
         
         var response = AccountLookupResponse.builder()
         		.accounts(accounts)
-        		.message(MessageFormat.format(RESULTS_FORMAT, accounts.size()))
+        		.message(String.format(RESULTS_FORMAT, accounts.size()))
         		.build();
         
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -73,7 +73,7 @@ public class AccountLookupController {
         
         var response = AccountLookupResponse.builder()
         		.accounts(accounts)
-        		.message(MessageFormat.format(RESULTS_FORMAT, accounts.size()))
+        		.message(String.format(RESULTS_FORMAT, accounts.size()))
         		.build();
         
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -89,7 +89,7 @@ public class AccountLookupController {
         
         var response = AccountLookupResponse.builder()
         		.accounts(accounts)
-        		.message(MessageFormat.format(RESULTS_FORMAT, accounts.size()))
+        		.message(String.format(RESULTS_FORMAT, accounts.size()))
         		.build();
         
         return new ResponseEntity<>(response, HttpStatus.OK);
