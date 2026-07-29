@@ -6,4 +6,3 @@
                                                            `--'                      `---'                                                                                     
 ${spring.application.name}
 Versión: ${spring.application.version}
-Log establecido a ${log.level}

@@ -1,6 +1,5 @@
 package com.banking.account.query.api.controllers;
 
-import java.text.MessageFormat;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -39,10 +38,10 @@ public class AccountLookupController {
         	return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
         }
         
-        var response = AccountLookupResponse.builder()
-        		.accounts(accounts)
-        		.message(String.format(RESULTS_FORMAT, accounts.size()))
-        		.build();
+        AccountLookupResponse response = new AccountLookupResponse();
+        
+        response.setAccounts(accounts);
+        response.setMessage(String.format(RESULTS_FORMAT, accounts.size()));
         
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -55,10 +54,10 @@ public class AccountLookupController {
         	return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
         }
         
-        var response = AccountLookupResponse.builder()
-        		.accounts(accounts)
-        		.message(String.format(RESULTS_FORMAT, accounts.size()))
-        		.build();
+        AccountLookupResponse response = new AccountLookupResponse();
+        
+        response.setAccounts(accounts);
+        response.setMessage(String.format(RESULTS_FORMAT, accounts.size()));
         
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -71,10 +70,10 @@ public class AccountLookupController {
         	return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
         }
         
-        var response = AccountLookupResponse.builder()
-        		.accounts(accounts)
-        		.message(String.format(RESULTS_FORMAT, accounts.size()))
-        		.build();
+        AccountLookupResponse response = new AccountLookupResponse();
+        
+        response.setAccounts(accounts);
+        response.setMessage(String.format(RESULTS_FORMAT, accounts.size()));
         
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -87,10 +86,10 @@ public class AccountLookupController {
         	return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
         }
         
-        var response = AccountLookupResponse.builder()
-        		.accounts(accounts)
-        		.message(String.format(RESULTS_FORMAT, accounts.size()))
-        		.build();
+        AccountLookupResponse response = new AccountLookupResponse();
+        
+        response.setAccounts(accounts);
+        response.setMessage(String.format(RESULTS_FORMAT, accounts.size()));
         
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

@@ -32,7 +32,7 @@ public class AccountEventStore implements EventStore {
 
 	@Override
 	public void saveEvents(String aggregateId, Iterable<BaseEvent> events, Integer expectedVersion) {
-		var eventStream = eventStoreRepository.findByAggregateIdentifier(aggregateId);
+		var eventStream = eventStoreRepository.listByIdentifier(aggregateId);
 		if (expectedVersion != -1 && eventStream.get(eventStream.size() - 1).getVersion() != expectedVersion) {
 			throw new ConcurrencyException();
 		}
@@ -62,7 +62,7 @@ public class AccountEventStore implements EventStore {
 
 	@Override
 	public List<BaseEvent> getEvents(String aggregateId) {
-		var eventStream = eventStoreRepository.findByAggregateIdentifier(aggregateId);
+		var eventStream = eventStoreRepository.listByIdentifier(aggregateId);
 		if (CollectionUtils.isEmpty(eventStream)) {
 			throw new AggregateNotFoundException("La cuenta del banco es incorrecta");
 		}

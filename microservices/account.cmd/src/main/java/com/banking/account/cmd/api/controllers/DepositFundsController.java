@@ -21,7 +21,7 @@ public class DepositFundsController {
     private CommandDispatcher commandDispatcher;
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<BaseResponse> depositFunds(@PathVariable(value="id") String id, @RequestBody DepositFundsCommand command) {
+    public ResponseEntity<BaseResponse> depositFunds(@PathVariable String id, @RequestBody DepositFundsCommand command) {
         command.setId(id);
 
         commandDispatcher.send(command);

@@ -26,13 +26,15 @@ public class AccountAggregate extends AggregateRoot {
 	private Double balance;
 	
 	public AccountAggregate(OpenAccountCommand command) {
-		raiseEvent(AccountOpenedEvent.builder()
-				.id(command.getId())
-				.accountHolder(command.getAccountHolder())
-				.createdDate(new Date())
-				.accountType(command.getAccountType())
-				.openingBalance(command.getOpeningBalance())
-				.build());
+		AccountOpenedEvent event = new AccountOpenedEvent();
+		
+		event.setId(command.getId());
+		event.setAccountHolder(command.getAccountHolder());
+		event.setCreatedDate(new Date());
+		event.setAccountType(command.getAccountType());
+		event.setOpeningBalance(command.getOpeningBalance());
+		
+		raiseEvent(event);
 	}
 	
 	public void depositFunds(Double amount) {
@@ -44,10 +46,12 @@ public class AccountAggregate extends AggregateRoot {
 			throw new IllegalSaslStateException("El depósito de dinero no puede ser menor o igual a 0");
 		}
 		
-		raiseEvent(FundsDepositedEvent.builder()
-				.id(this.id)
-				.amount(amount)
-				.build());
+		FundsDepositedEvent event = new FundsDepositedEvent();
+		
+		event.setId(id);
+		event.setAmount(amount);
+		
+		raiseEvent(event);
 	}
 	
 	public void withdrawFunds(Double amount) {
@@ -55,10 +59,12 @@ public class AccountAggregate extends AggregateRoot {
 			throw new IllegalSaslStateException("La cuenta bancaria está cerrada");
 		}
 		
-		raiseEvent(FundsWithdrawnEvent.builder()
-				.id(this.id)
-				.amount(amount)
-				.build());
+		FundsWithdrawnEvent event = new FundsWithdrawnEvent();
+		
+		event.setId(id);
+		event.setAmount(amount);
+		
+		raiseEvent(event);
 	}
 	
 	public void closeAccount() {
@@ -66,9 +72,11 @@ public class AccountAggregate extends AggregateRoot {
 			throw new IllegalSaslStateException("La cuenta bancaria está cerrada");
 		}
 		
-		raiseEvent(AccountClosedEvent.builder()
-				.id(this.id)
-				.build());
+		AccountClosedEvent event = new AccountClosedEvent();
+		
+		event.setId(id);
+		
+		raiseEvent(event);
 	}
 	
 	public void apply(AccountOpenedEvent event) {

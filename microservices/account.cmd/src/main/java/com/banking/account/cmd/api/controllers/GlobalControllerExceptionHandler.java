@@ -38,7 +38,7 @@ public class GlobalControllerExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseEntity<BaseResponse> exception(Exception ex) {
-        log.error("ERROR: {}", ex.getMessage());
+        log.error("ERROR: {}", ex);
 
         BaseResponse baseResponse = new BaseResponse(ex.getMessage());
 
