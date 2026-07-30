@@ -25,6 +25,16 @@ public class GlobalControllerExceptionHandler {
         return ResponseEntity.badRequest().body(baseResponse);
     }
     
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<BaseResponse> illegalArgumentException(IllegalArgumentException ex) {
+        log.error("ERROR: {}", ex.getMessage());
+
+        BaseResponse baseResponse = new BaseResponse(ex.getMessage());
+
+        return ResponseEntity.badRequest().body(baseResponse);
+    }
+    
     @ExceptionHandler(AggregateNotFoundException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<BaseResponse> aggregateNotFoundException(AggregateNotFoundException ex) {
