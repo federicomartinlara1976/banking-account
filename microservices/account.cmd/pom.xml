@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>com.banking</groupId>
 		<artifactId>microservices</artifactId>
-		<version>1.0.0</version>
+		<version>1.0.1</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
@@ -27,6 +27,12 @@
 			<artifactId>spring-kafka</artifactId>
 		</dependency>
 		
+		<dependency>
+	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-starter-tomcat</artifactId>
+	        <scope>provided</scope>
+	    </dependency>
+		
 	</dependencies>
 
 	<build>
@@ -45,6 +51,7 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			
 		</plugins>
 	</build>
 	

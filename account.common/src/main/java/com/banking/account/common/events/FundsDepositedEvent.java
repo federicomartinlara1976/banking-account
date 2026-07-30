@@ -3,15 +3,17 @@ package com.banking.account.common.events;
 import com.banking.cqrs.core.events.BaseEvent;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
+import lombok.Setter;
+import lombok.ToString;
 
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@SuperBuilder
+@ToString
 public class FundsDepositedEvent extends BaseEvent {
 
+	@Getter
+	@Setter
 	private Double amount;
 }

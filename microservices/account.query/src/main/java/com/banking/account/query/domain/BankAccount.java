@@ -1,17 +1,18 @@
 package com.banking.account.query.domain;
 
+import java.util.Date;
+
 import com.banking.account.common.dto.AccountType;
 import com.banking.cqrs.core.domain.BaseEntity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-
-import java.util.Date;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @NoArgsConstructor
@@ -19,6 +20,7 @@ import java.util.Date;
 @Builder(toBuilder = true)
 @Entity
 @Table(name = "bank_account")
+@ToString
 public class BankAccount extends BaseEntity {
 
     @Id

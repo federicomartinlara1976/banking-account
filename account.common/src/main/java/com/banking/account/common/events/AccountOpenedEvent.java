@@ -6,22 +6,30 @@ import com.banking.account.common.dto.AccountType;
 import com.banking.cqrs.core.events.BaseEvent;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
+import lombok.Setter;
+import lombok.ToString;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@SuperBuilder
+@ToString
 public class AccountOpenedEvent extends BaseEvent {
-	
+
+	@Getter
+	@Setter
 	private String accountHolder;
 	
+	@Getter
+	@Setter
 	private AccountType accountType;
 	
+	@Getter
+	@Setter
 	private Date createdDate;
 	
+	@Getter
+	@Setter
 	private Double openingBalance;
 
 }

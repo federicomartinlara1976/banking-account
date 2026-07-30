@@ -16,13 +16,10 @@ public class OpenApiConfig {
 	@Value("${spring.application.version}")
 	String appVersion;
 
-	@Value("${spring.profiles.active}")
-	String appProfile;
-
 	OpenAPI customOpenAPI() {
 		String descripcion = String.format(
-				"<b>%s</b> Versión: <b>%s</b><br>Perfil activo: <b>%s</b>", appName,
-				appVersion, appProfile);
+				"<b>%s</b> Versión: <b>%s</b>", appName,
+				appVersion);
 
 		return new OpenAPI().info(new Info().title(appName).version(appVersion).description(descripcion))
 				.addServersItem(new Server().url("").description("Default server URL"));

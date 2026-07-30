@@ -1,9 +1,9 @@
 package com.banking.account.query.api.queries;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.banking.account.query.api.dto.EqualityType;
@@ -14,8 +14,11 @@ import com.banking.cqrs.core.domain.BaseEntity;
 @Service
 public class AccountQueryHandler implements QueryHandler {
 	
-	@Autowired
 	private AccountRepository accountRepository;
+		
+	public AccountQueryHandler(AccountRepository accountRepository) {
+		this.accountRepository = accountRepository;
+	}
 
 	@Override
 	public List<BaseEntity> handle(FindAllAccountsQuery query) {
@@ -27,32 +30,23 @@ public class AccountQueryHandler implements QueryHandler {
 
 	@Override
 	public List<BaseEntity> handle(FindAccountByIdQuery query) {
-		var bankAccount = accountRepository.findById(query.getId());
-		if (bankAccount.isPresent()) {
-			return null;
-		}
-		List<BaseEntity> accountList = new ArrayList<>();
-		accountList.add(bankAccount.get());
-		return accountList;
+		return accountRepository.findById(query.getId())
+	            .map(Collections::<BaseEntity>singletonList)
+	            .orElse(Collections.emptyList());
 	}
 
 	@Override
 	public List<BaseEntity> handle(FindAccountByHolderQuery query) {
-		var bankAccount = accountRepository.findByAccountHolder(query.getAccountHolder());
-		if (bankAccount.isPresent()) {
-			return null;
-		}
-		List<BaseEntity> accountList = new ArrayList<>();
-		accountList.add(bankAccount.get());
-		return accountList;
+		return accountRepository.findByAccountHolder(query.getAccountHolder())
+	            .map(Collections::<BaseEntity>singletonList)
+	            .orElse(Collections.emptyList());
 	}
 
 	@Override
 	public List<BaseEntity> handle(FindAccountWithBalanceQuery query) {
-		List<BaseEntity> bankAccountList = (query.getEqualityType() == EqualityType.GREATER_THAN) 
+		return (query.getEqualityType() == EqualityType.GREATER_THAN) 
 				? accountRepository.findByBalanceGreaterThan(query.getBalance()) 
 				: accountRepository.findByBalanceLessThan(query.getBalance());
-		return bankAccountList;
 	}
 
 }

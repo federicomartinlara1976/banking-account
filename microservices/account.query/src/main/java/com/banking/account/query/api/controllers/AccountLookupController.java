@@ -1,10 +1,8 @@
 package com.banking.account.query.api.controllers;
 
-import java.text.MessageFormat;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,10 +23,14 @@ import com.banking.cqrs.core.infrastructure.QueryDispatcher;
 @RequestMapping(path = "/account-query/api/bankAccountLookup")
 public class AccountLookupController {
 
-    @Autowired
-    private QueryDispatcher queryDispatcher;
+    private static final String RESULTS_FORMAT = "%d results";
+	private QueryDispatcher queryDispatcher;
+    
+    public AccountLookupController(QueryDispatcher queryDispatcher) {
+		this.queryDispatcher = queryDispatcher;
+	}
 
-    @GetMapping("/")
+	@GetMapping("/")
     public ResponseEntity<AccountLookupResponse> getAllAccounts() {
         List<BankAccount> accounts = queryDispatcher.send(new FindAllAccountsQuery());
         
@@ -36,12 +38,12 @@ public class AccountLookupController {
         	return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
         }
         
-        var response = AccountLookupResponse.builder()
-        		.accounts(accounts)
-        		.message(MessageFormat.format("{0} results", accounts.size()))
-        		.build();
+        AccountLookupResponse response = new AccountLookupResponse();
         
-        return new ResponseEntity<AccountLookupResponse>(response, HttpStatus.OK);
+        response.setAccounts(accounts);
+        response.setMessage(String.format(RESULTS_FORMAT, accounts.size()));
+        
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
     
     @GetMapping("/byId/{id}")
@@ -52,12 +54,12 @@ public class AccountLookupController {
         	return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
         }
         
-        var response = AccountLookupResponse.builder()
-        		.accounts(accounts)
-        		.message(MessageFormat.format("%d results", accounts.size()))
-        		.build();
+        AccountLookupResponse response = new AccountLookupResponse();
         
-        return new ResponseEntity<AccountLookupResponse>(response, HttpStatus.OK);
+        response.setAccounts(accounts);
+        response.setMessage(String.format(RESULTS_FORMAT, accounts.size()));
+        
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
     
     @GetMapping("/byHolder/{accountHolder}")
@@ -68,12 +70,12 @@ public class AccountLookupController {
         	return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
         }
         
-        var response = AccountLookupResponse.builder()
-        		.accounts(accounts)
-        		.message(MessageFormat.format("%d results", accounts.size()))
-        		.build();
+        AccountLookupResponse response = new AccountLookupResponse();
         
-        return new ResponseEntity<AccountLookupResponse>(response, HttpStatus.OK);
+        response.setAccounts(accounts);
+        response.setMessage(String.format(RESULTS_FORMAT, accounts.size()));
+        
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
     
     @GetMapping("/withBalance/{equalityType}/{balance}")
@@ -84,11 +86,11 @@ public class AccountLookupController {
         	return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
         }
         
-        var response = AccountLookupResponse.builder()
-        		.accounts(accounts)
-        		.message(MessageFormat.format("%d results", accounts.size()))
-        		.build();
+        AccountLookupResponse response = new AccountLookupResponse();
         
-        return new ResponseEntity<AccountLookupResponse>(response, HttpStatus.OK);
+        response.setAccounts(accounts);
+        response.setMessage(String.format(RESULTS_FORMAT, accounts.size()));
+        
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
