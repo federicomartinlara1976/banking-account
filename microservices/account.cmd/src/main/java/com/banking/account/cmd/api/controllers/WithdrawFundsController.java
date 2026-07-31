@@ -1,5 +1,7 @@
 package com.banking.account.cmd.api.controllers;
 
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,10 @@ import com.banking.account.cmd.api.command.WithdrawFundsCommand;
 import com.banking.account.common.dto.BaseResponse;
 import com.banking.cqrs.core.infrastructure.CommandDispatcher;
 
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validator;
+import lombok.SneakyThrows;
+
 @RestController
 @RequestMapping(path = "/account-cmd/api/withdrawFunds")
 public class WithdrawFundsController {
@@ -20,9 +26,18 @@ public class WithdrawFundsController {
     @Autowired
     private CommandDispatcher commandDispatcher;
     
+    @Autowired
+    private Validator validator;
+    
     @PutMapping(path = "/{id}")
-    public ResponseEntity<BaseResponse> depositFunds(@PathVariable(value="id") String id, @RequestBody WithdrawFundsCommand command) {
-        command.setId(id);
+    @SneakyThrows(IllegalArgumentException.class)
+    public ResponseEntity<BaseResponse> depositFunds(@PathVariable String id, @RequestBody WithdrawFundsCommand command) {
+    	Set<ConstraintViolation<WithdrawFundsCommand>> violations = validator.validate(command);
+        if (!violations.isEmpty()) {
+            throw new IllegalArgumentException(violations.iterator().next().getMessage());
+        }
+    	
+    	command.setId(id);
 
         commandDispatcher.send(command);
         return new ResponseEntity<>(new BaseResponse("Dinero retirado"), HttpStatus.OK);
