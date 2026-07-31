@@ -4,13 +4,17 @@ import com.banking.account.query.api.dto.EqualityType;
 import com.banking.cqrs.core.queries.BaseQuery;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
 @AllArgsConstructor
 public class FindAccountWithBalanceQuery extends BaseQuery {
-	
+
+	@Getter
+	@Setter
 	private Double balance;
 	
+	@Getter
+	@Setter
 	private EqualityType equalityType;
 }

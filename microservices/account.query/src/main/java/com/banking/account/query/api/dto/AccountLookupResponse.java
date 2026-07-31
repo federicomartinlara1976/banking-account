@@ -6,14 +6,16 @@ import com.banking.account.common.dto.BaseResponse;
 import com.banking.account.query.domain.BankAccount;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class AccountLookupResponse extends BaseResponse {
 
+	@Getter
+	@Setter
 	private List<BankAccount> accounts;
 	
 	public AccountLookupResponse(String message) {
