@@ -10,11 +10,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
@@ -26,11 +26,19 @@ public class BankAccount extends BaseEntity {
     @Id
     private String id;
 
+    @Getter
+    @Setter
     private String accountHolder;
 
+    @Getter
+    @Setter
     private Date creationDate;
 
+    @Getter
+    @Setter
     private AccountType accountType;
 
+    @Getter
+    @Setter
     private Double balance;
 }

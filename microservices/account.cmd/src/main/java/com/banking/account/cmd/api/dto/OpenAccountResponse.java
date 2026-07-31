@@ -1,15 +1,14 @@
 package com.banking.account.cmd.api.dto;
 
 import com.banking.account.common.dto.BaseResponse;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+import lombok.Getter;
+import lombok.Setter;
+
 public class OpenAccountResponse extends BaseResponse {
 
+	@Getter
+	@Setter
     private String id;
 
     public OpenAccountResponse(String id, String message) {

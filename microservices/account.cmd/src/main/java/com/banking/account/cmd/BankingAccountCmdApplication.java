@@ -12,7 +12,6 @@ import com.banking.account.cmd.api.command.CommandHandler;
 import com.banking.account.cmd.api.command.DepositFundsCommand;
 import com.banking.account.cmd.api.command.OpenAccountCommand;
 import com.banking.account.cmd.api.command.WithdrawFundsCommand;
-import com.banking.cqrs.core.commands.CommandHandlerMethod;
 import com.banking.cqrs.core.infrastructure.CommandDispatcher;
 
 @SpringBootApplication

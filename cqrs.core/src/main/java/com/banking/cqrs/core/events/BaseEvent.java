@@ -2,14 +2,12 @@ package com.banking.cqrs.core.events;
 
 import com.banking.cqrs.core.messages.Message;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class BaseEvent extends Message {
 
+	@Getter
+	@Setter
 	private Integer version;
 }
