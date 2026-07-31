@@ -4,6 +4,7 @@ import java.util.function.DoubleBinaryOperator;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import com.banking.account.common.events.AccountClosedEvent;
 import com.banking.account.common.events.AccountOpenedEvent;
@@ -68,7 +69,11 @@ public class AccountEventHandler implements EventHandler {
     @Override
     @Transactional
     public void on(AccountClosedEvent event) {
-        accountRepository.deleteById(event.getId());
-        log.info("Deleted: {}", event.getId());
+    	accountRepository.findById(event.getId()).ifPresent(account -> {
+    		Assert.isTrue(account.getBalance() == 0.0, "La cuenta no debe tener fondos antes de cerrarla");
+    		
+    		accountRepository.deleteById(event.getId());
+            log.info("Deleted: {}", event.getId());
+    	});
     }
 }

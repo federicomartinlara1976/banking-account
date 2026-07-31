@@ -10,7 +10,10 @@ import com.banking.account.common.events.FundsDepositedEvent;
 import com.banking.account.common.events.FundsWithdrawnEvent;
 import com.banking.account.query.infrastructure.handlers.EventHandler;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class AccountEventConsumer implements EventConsumer {
 
     private EventHandler eventHandler;
@@ -44,7 +47,12 @@ public class AccountEventConsumer implements EventConsumer {
     @KafkaListener(topics = "AccountClosedEvent", groupId = "${spring.kafka.consumer.group-id}")
     @Override
     public void comsume(AccountClosedEvent event, Acknowledgment acknowledgment) {
-        eventHandler.on(event);
-        acknowledgment.acknowledge();
+    	try {
+    		eventHandler.on(event);
+    	} catch (IllegalArgumentException e) { // Si la cuenta no está vacía, lanzará esta excepción
+    		log.warn(e.getMessage());
+    	} finally {
+    		acknowledgment.acknowledge();
+    	}
     }
 }

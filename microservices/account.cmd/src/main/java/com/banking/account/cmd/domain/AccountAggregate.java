@@ -93,6 +93,5 @@ public class AccountAggregate extends AggregateRoot {
 	public void apply(AccountClosedEvent event) {
 		log.info("Apply {}", event);
 		this.id = event.getId();
-		this.active = Boolean.FALSE;
 	}
 }
