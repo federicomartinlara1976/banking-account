@@ -1,13 +1,15 @@
 package com.banking.cqrs.core.messages;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Message {
 
+	@Getter
+	@Setter
 	private String id;
 }

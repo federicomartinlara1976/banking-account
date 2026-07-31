@@ -24,6 +24,8 @@ import lombok.ToString;
 public class BankAccount extends BaseEntity {
 
     @Id
+    @Getter
+    @Setter
     private String id;
 
     @Getter
