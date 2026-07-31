@@ -28,6 +28,6 @@ public class OpenAccountController {
         command.setId(id);
 
         commandDispatcher.send(command);
-        return new ResponseEntity<>(new OpenAccountResponse(id, "Cuenta creada"), HttpStatus.CREATED);
+        return new ResponseEntity<>(new OpenAccountResponse(id, "Operación enviada"), HttpStatus.CREATED);
     }
 }

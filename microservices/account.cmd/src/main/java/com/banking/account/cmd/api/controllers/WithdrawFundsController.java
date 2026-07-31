@@ -40,6 +40,6 @@ public class WithdrawFundsController {
     	command.setId(id);
 
         commandDispatcher.send(command);
-        return new ResponseEntity<>(new BaseResponse("Dinero retirado"), HttpStatus.OK);
+        return new ResponseEntity<>(new BaseResponse("Operación enviada"), HttpStatus.OK);
     }
 }

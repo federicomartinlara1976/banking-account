@@ -20,10 +20,10 @@ public class CloseAccountController {
     private CommandDispatcher commandDispatcher;
     
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity<BaseResponse> depositFunds(@PathVariable(value="id") String id) {
+    public ResponseEntity<BaseResponse> depositFunds(@PathVariable String id) {
     	CloseAccountCommand command = new CloseAccountCommand(id);
 
         commandDispatcher.send(command);
-        return new ResponseEntity<>(new BaseResponse("Cuenta cancelada"), HttpStatus.OK);
+        return new ResponseEntity<>(new BaseResponse("Operación enviada"), HttpStatus.OK);
     }
 }
