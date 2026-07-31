@@ -40,8 +40,13 @@ public class AccountEventConsumer implements EventConsumer {
     @KafkaListener(topics = "FundsWithdrawnEvent", groupId = "${spring.kafka.consumer.group-id}")
     @Override
     public void comsume(FundsWithdrawnEvent event, Acknowledgment acknowledgment) {
-        eventHandler.on(event);
-        acknowledgment.acknowledge();
+    	try {
+    		eventHandler.on(event);
+    	} catch (IllegalArgumentException e) { // Si la cuenta no tiene fondos suficientes, lanzará esta excepción
+    		log.warn(e.getMessage());
+    	} finally {
+    		acknowledgment.acknowledge();
+    	}
     }
 
     @KafkaListener(topics = "AccountClosedEvent", groupId = "${spring.kafka.consumer.group-id}")

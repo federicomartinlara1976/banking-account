@@ -51,6 +51,10 @@ public class AccountEventHandler implements EventHandler {
 
     @Override
     public void on(FundsWithdrawnEvent event) {
+    	accountRepository.findById(event.getId()).ifPresent(account -> {
+    		Assert.isTrue(account.getBalance() < event.getAmount(), "La cuenta no tiene fondos suficientes");
+    	});
+    	
     	update(event, event.getAmount(), bResta);
     }
     
