@@ -40,7 +40,6 @@ public class AccountAggregate extends AggregateRoot {
 	
 	public void depositFunds(Double amount) {
 		Assert.isTrue(active, "Los fondos no pueden ser depositados en esta cuenta");
-		Assert.isTrue(amount > 0.0, "El depósito de dinero no puede ser menor o igual a 0");
 		
 		FundsDepositedEvent event = new FundsDepositedEvent();
 		

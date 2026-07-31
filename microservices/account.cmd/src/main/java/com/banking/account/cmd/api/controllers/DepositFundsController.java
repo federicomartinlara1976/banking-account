@@ -1,5 +1,7 @@
 package com.banking.account.cmd.api.controllers;
 
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,15 +15,28 @@ import com.banking.account.cmd.api.command.DepositFundsCommand;
 import com.banking.account.common.dto.BaseResponse;
 import com.banking.cqrs.core.infrastructure.CommandDispatcher;
 
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validator;
+import lombok.SneakyThrows;
+
 @RestController
 @RequestMapping(path = "/account-cmd/api/depositFunds")
 public class DepositFundsController {
 
     @Autowired
     private CommandDispatcher commandDispatcher;
+    
+    @Autowired
+    private Validator validator;
 
     @PutMapping(path = "/{id}")
+    @SneakyThrows(IllegalArgumentException.class)
     public ResponseEntity<BaseResponse> depositFunds(@PathVariable String id, @RequestBody DepositFundsCommand command) {
+    	Set<ConstraintViolation<DepositFundsCommand>> violations = validator.validate(command);
+        if (!violations.isEmpty()) {
+            throw new IllegalArgumentException(violations.iterator().next().getMessage());
+        }
+    	
         command.setId(id);
 
         commandDispatcher.send(command);
