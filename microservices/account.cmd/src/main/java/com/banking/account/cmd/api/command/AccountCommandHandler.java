@@ -1,6 +1,5 @@
 package com.banking.account.cmd.api.command;
 
-import org.apache.kafka.common.errors.IllegalSaslStateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,11 +28,6 @@ public class AccountCommandHandler implements CommandHandler {
 	@Override
 	public void handle(WithdrawFundsCommand command) {
 		var aggregate = handler.getById(command.getId());
-		
-		if (command.getAmount() > aggregate.getBalance()) {
-			throw new IllegalSaslStateException("Insuficientes fondos");
-		}
-		
 		aggregate.withdrawFunds(command.getAmount());
 		handler.save(aggregate);
 	}
